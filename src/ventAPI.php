@@ -3,6 +3,8 @@
 namespace ventAPI;
 use GuzzleHttp;
 
+require 'vendor/autoload.php';
+
 class ventAPI{
     private $http;
 
