@@ -2,7 +2,7 @@
     "name": "venta-solutions/vent-api",
     "description": "A small library to connect to the ventaGaming API",
     "type": "library",
-    "license": "PRIVATE",
+    "license": "MIT",
     "authors": [
         {
             "name": "venta Solutions",
