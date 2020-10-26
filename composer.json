@@ -1,0 +1,22 @@
+{
+    "name": "ventaSolutions/ventAPI",
+    "description": "A small library to connect to the ventaGaming API",
+    "type": "library",
+    "license": "PRIVATE",
+    "authors": [
+        {
+            "name": "venta Solutions",
+            "email": "info@venta.one"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "RandomQuotes\\": "src/"
+        }
+    },
+    "require": {
+            "guzzlehttp/guzzle": "^7.2"
+    }
+
+}
+
