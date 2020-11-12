@@ -53,7 +53,7 @@ class ventAPI{
 
     private function get_secure($url){
         if(!isset($_SESSION['ventAPItoken'])){
-            echo ('Not logged in for Secure Action');
+            error_log('Not logged in for Secure Action');
             return [];
         }
         return $this->http->request('GET',$url,[
