@@ -34,16 +34,21 @@ class ventAPI{
         global $http;
         $credentials['username'] = $username;
         $credentials['password'] = $password;
-        $response = $this->http->request('POST','http://ventagaming.de:9090/api/auth/token',
-            [
-                'body' => json_encode($credentials)
-                ,
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => '*/*',
-                ]
-            ]);
-        $_SESSION['ventAPItoken'] = $response->getBody();
+        try {
+            $response = $this->http->request('POST', 'http://ventagaming.de:9090/api/auth/token',
+                [
+                    'body' => json_encode($credentials)
+                    ,
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => '*/*',
+                    ]
+                ]);
+            $_SESSION['ventAPItoken'] = $response->getBody();
+        }
+        catch (Exception $e){
+            error_log("Can't Authenticate; API is offline");
+        }
     }
 
     private function get_secure($url){
