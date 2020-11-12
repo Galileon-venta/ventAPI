@@ -1,12 +1,16 @@
 <?php
 
 namespace ventAPI;
+use Exception;
 use GuzzleHttp;
 
 require 'vendor/autoload.php';
 
 class ventAPI{
     private $http;
+    /**
+     * @var int
+     */
 
     /**
      * ventAPI constructor.
@@ -18,12 +22,12 @@ class ventAPI{
 
     public function ventAPI_get_game_groups(){
         $url = "http://ventaGaming.de:9090/api/secure/groups/gamegroups/webpanel";
-        return json_decode($this->file_get_contents_secure($url), true);
+        return json_decode($this->get_secure($url));
     }
 
-    public function ventAPI_get_random_feedback(){
-        $url = "http://ventaGaming.de:9090/api/secure/web/getFeedback/random";
-        return json_decode($this->file_get_contents_secure($url));
+    public function ventAPI_get_random_feedback($count){
+        $url = "http://ventaGaming.de:9090/api/secure/web/getFeedback/random/".$count."";
+        return json_decode($this->get_secure($url));
     }
 
     public function ventAPI_login($username,$password){
@@ -42,7 +46,11 @@ class ventAPI{
         $_SESSION['ventAPItoken'] = $response->getBody();
     }
 
-    private function file_get_contents_secure($url){
+    private function get_secure($url){
+        if(!isset($_SESSION['ventAPItoken'])){
+            echo ('Not logged in for Secure Action');
+            return [];
+        }
         return $this->http->request('GET',$url,[
             'headers' => [
                 'AUTHORIZATION' => 'Bearer '.$_SESSION['ventAPItoken'],
