@@ -22,7 +22,7 @@ class ventAPI{
 
     public function ventAPI_get_game_groups(){
         $url = "http://ventaGaming.de:9090/api/secure/groups/gamegroups/webpanel";
-        return json_decode($this->get_secure($url));
+        return json_decode($this->get_secure($url),true);
     }
 
     public function ventAPI_get_random_feedback($count){
