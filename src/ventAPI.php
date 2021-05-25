@@ -32,7 +32,12 @@ class ventAPI{
 
     public function ventAPI_preflight_Steam_Connection($dbid, $request){
         $url = "http://ventaGaming.de:9090/api/secure/tsClients/steampreflight/".$dbid."/".$request;
-        return json_decode($this->get_secure($url));
+        return $this->get_secure($url);
+    }
+
+    public function ventAPI_confirm_Steam_Account($dbid, $request, $steamid){
+        $url = "http://ventaGaming.de:9090/api/secure/tsClients/steamconfirmation/".$dbid."/".$request;
+        return $this->post_secure($url, $steamid);
     }
 
     public function ventAPI_login($username,$password){
@@ -54,6 +59,22 @@ class ventAPI{
         catch (Exception $e){
             error_log("Can't Authenticate; API is offline");
         }
+    }
+
+
+    private function post_secure($url, $body){
+        if(!isset($_SESSION['ventAPItoken'])){
+            error_log('Not logged in for Secure Action');
+            return [];
+        }
+        return $this->http->request('POST',$url,[
+            'body' => json_encode($body),
+            'headers' => [
+                'AUTHORIZATION' => 'Bearer '.$_SESSION['ventAPItoken'],
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ]
+        ])->getBody();
     }
 
     private function get_secure($url){
