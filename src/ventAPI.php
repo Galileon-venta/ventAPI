@@ -30,6 +30,11 @@ class ventAPI{
         return json_decode($this->get_secure($url));
     }
 
+    public function ventAPI_preflight_Steam_Connection($dbid, $request){
+        $url = "http://ventaGaming.de:9090/api/secure/tsClients/steampreflight/".$dbid."/".$request;
+        return json_decode($this->get_secure($url));
+    }
+
     public function ventAPI_login($username,$password){
         global $http;
         $credentials['username'] = $username;
